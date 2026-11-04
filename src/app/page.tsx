@@ -3,6 +3,7 @@ import Link from "next/link";
 import "./landing.css";
 import Orb from "@/components/Orb";
 import FlowSection from "@/components/landing/FlowSection";
+import LandingNav from "@/components/landing/LandingNav";
 import { MockFlip, MockReply, NOTE_SAMPLES } from "@/components/landing/Mocks";
 
 export const metadata: Metadata = {
@@ -85,7 +86,7 @@ const HOW_TO = [
 const FAQ = [
   {
     q: "회원가입을 해야 하나요?",
-    a: "따로 가입 절차는 없어요. 처음 들어올 때 적은 이름과 비밀번호가 그대로 내 계정이 돼요. 비밀번호는 잊어버리면 되찾을 방법이 없으니 기억하기 쉬운 걸로 정해 주세요.",
+    a: "따로 가입 절차는 없어요. 처음 들어올 때 적은 이름과 비밀번호가 그대로 내 계정이 돼요. 같은 이름을 다른 사람이 먼저 썼다면, 비밀번호를 다르게 해서 내 공간을 따로 만들 수 있어요. 비밀번호는 잊어버리면 되찾을 방법이 없으니 기억하기 쉬운 걸로 정해 주세요.",
   },
   {
     q: "대화 내용은 어디에 저장되나요?",
@@ -133,13 +134,7 @@ export default function LandingPage() {
           <Link href="/" className="lp-logo" aria-label="이음 E-um 처음으로">
             E-um
           </Link>
-          <nav className="lp-nav" aria-label="소개 메뉴">
-            <a href="#principles">소개</a>
-            <a href="#modes">듀얼모드</a>
-            <a href="#prism">Mind Prism</a>
-            <a href="#how">사용법</a>
-            <a href="#faq">자주 묻는 질문</a>
-          </nav>
+          <LandingNav />
           <Link href="/chat" className="lp-btn lp-btn--dark lp-btn--sm">
             대화 시작하기
           </Link>

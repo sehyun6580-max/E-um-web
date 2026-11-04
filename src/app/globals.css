@@ -327,6 +327,24 @@ button:disabled {
   color: #c2335d;
 }
 
+.login-taken {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f6f4fa;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.login-taken p {
+  margin: 0;
+}
+
+.login-taken .btn {
+  margin-top: 10px;
+  height: 40px;
+}
+
 .login-note {
   margin: 20px 0 0;
   text-align: center;

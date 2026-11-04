@@ -199,6 +199,34 @@ html:has(.lp) {
   color: var(--lp-ink);
 }
 
+/* 지금 보고 있는 섹션: 글자 아래 작은 회색 바 */
+.lp-nav a {
+  position: relative;
+}
+
+.lp-nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--lp-gray-2);
+  opacity: 0;
+  transform: translateX(-50%) scaleX(0.4);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.lp-nav a[aria-current="location"] {
+  color: var(--lp-ink);
+}
+
+.lp-nav a[aria-current="location"]::after {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(1);
+}
+
 /* ───────── 첫 화면 ───────── */
 .lp-hero {
   position: relative;
@@ -1359,7 +1387,8 @@ html:has(.lp) {
   }
 
   .lp-screen,
-  .lp-flow-step {
+  .lp-flow-step,
+  .lp-nav a::after {
     transition: none;
   }
 }
