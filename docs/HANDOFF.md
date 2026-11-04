@@ -2,7 +2,8 @@
 
 - 작성일: 2026-11-04
 - 넘겨주는 사람: `jaewonbbae` (이전 담당)
-- 받는 사람: `sehyun6580-max` (GitHub 협업자, 쓰기 권한)
+- 받는 사람: `sehyun6580-max`
+- 진행 상황: 이전 담당은 이 프로젝트에서 손을 떼요. 2026-11-04에 저장소를 `sehyun6580-max`에게 넘기는 요청을 보냈어요 (3장 방법 B).
 - Claude에게 줄 작업 지침은 저장소 맨 위의 [`CLAUDE.md`](../CLAUDE.md)에 따로 있어요. Claude Code로 이 저장소를 열면 자동으로 읽혀요.
 
 ---
@@ -11,7 +12,7 @@
 
 1. 기능설명서의 이음 챗봇을 **Next.js로 새로 만들어** Vercel에 배포했어요. 소개 웹사이트(`/`)와 챗봇(`/chat`)이 있어요.
 2. 실제 사이트에서 Claude(F봇)와 OpenAI(T봇) 답변, 초안 채우기까지 **실제 키로 동작하는 것을 확인**했어요.
-3. 가장 먼저 할 일은 **GitHub·Vercel·API 키의 주인을 정하는 것**(3장)과 **입장 비밀번호 만들기**(7장 1번)예요. 지금은 주소만 알면 누구나 AI를 쓸 수 있고, 비용은 이전 담당의 키로 나가요.
+3. 가장 먼저 할 일은 **저장소 이전을 수락하고 내 Vercel에 다시 배포하는 것**(3장 '받는 사람이 할 일')과 **입장 비밀번호 만들기**(7장 1번)예요. 새로 배포하기 전까지는 기존 주소가 이전 담당의 키로 돌아가고, 주소만 알면 누구나 AI를 쓸 수 있어요.
 
 ---
 
@@ -19,11 +20,11 @@
 
 | 항목 | 상태 |
 | --- | --- |
-| 실제 사이트 | https://e-um-eight.vercel.app (소개 `/`, 챗봇 `/chat`) |
-| 저장소 | https://github.com/jaewonbbae/E-um (공개, `main` 브랜치) |
-| Vercel 프로젝트 | https://vercel.com/2026-uu-digital-healthcare-hackathon/e-um (이전 담당 계정의 팀) |
-| API 키 | Vercel 환경 변수에 `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` 둘 다 들어 있어요 (이전 담당의 키) |
-| 협업 권한 | `sehyun6580-max`가 저장소 쓰기 권한(Write)을 가지고 있어요 |
+| 실제 사이트 | https://e-um-eight.vercel.app (소개 `/`, 챗봇 `/chat`). 이전 담당의 Vercel에 있어서, 새 담당이 다시 배포하면 이전 담당이 지울 예정이에요 |
+| 저장소 | https://github.com/sehyun6580-max/E-um-web (공개, `main` 브랜치). 수락 전 주소는 `jaewonbbae/E-um-web`이고, 처음 이름은 `E-um`이었어요. 옛 주소로 들어가도 자동으로 넘어가요 |
+| Vercel 프로젝트 | https://vercel.com/2026-uu-digital-healthcare-hackathon/e-um (이전 담당 계정의 팀). 새 담당이 자기 Vercel에 새로 만들어요 |
+| API 키 | Vercel 환경 변수에 `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` 둘 다 들어 있어요 (이전 담당의 키, 다시 배포한 뒤 삭제 예정) |
+| 저장소 주인 | 이전을 수락하면 `sehyun6580-max`가 주인이 돼요 |
 | 자동 배포 | `main`에 올리면 실제 사이트에 1~2분 안에 반영되고, PR마다 미리보기 주소가 생겨요 |
 
 **확인한 것**
@@ -55,7 +56,7 @@
 | 코드 전체 | GitHub 저장소 | `CLAUDE.md`(Claude 지침)와 이 문서가 함께 들어 있어요 |
 | 기능설명서 PDF | 이미 가지고 있다면 그대로 써요 | 공개 저장소라 PDF는 넣지 않았어요. 5쪽 '기술 구성과 배포'는 Streamlit 기준이라 고쳐야 해요 (6장) |
 | 디자인 참고 | 아래 링크 | 챗봇 화면은 Cortex 스타일 이미지(라벤더 배경, 흰 카드, 빛나는 구슬)를 참고했어요 |
-| API 키 | **주고받지 않아요** | 각자 자기 키를 쓰거나, 3장 방법대로 주인을 정해요. 메신저로 키를 보내지 마세요 |
+| API 키 | **주고받지 않아요** | 새 담당이 자기 키를 발급받아 Vercel에 넣어요. 메신저로 키를 보내지 마세요 |
 
 디자인 참고 링크
 - 소개 페이지 디자인: https://uwellnow.com/
@@ -65,8 +66,8 @@
 
 1. **내 컴퓨터에 받기**
    ```bash
-   git clone https://github.com/jaewonbbae/E-um.git
-   cd E-um
+   git clone https://github.com/sehyun6580-max/E-um-web.git
+   cd E-um-web
    npm install
    cp .env.example .env.local   # 키를 안 넣어도 돼요. 비워 두면 예시 답변으로 동작해요
    npm run dev                  # http://localhost:3000
@@ -74,17 +75,17 @@
    Node.js 20 이상이 필요해요.
 2. **화면 둘러보기**: http://localhost:3000 (소개)과 http://localhost:3000/chat (챗봇)을 열어 보세요. 로그인은 아무 이름과 네 글자 이상의 비밀번호로 하면 돼요.
 3. **Claude에게 넘기기**: Claude Code로 이 폴더를 열고 10장의 첫 메시지를 보내세요.
-4. **주인 정하기**: 이전 담당과 함께 3장 방법 A, B 중 하나를 고르세요.
-5. **사용 금액 한도 걸기**: 누구 키든 Anthropic Console과 OpenAI 결제 설정에서 월 사용 한도를 걸어 두세요.
+4. **이전 수락과 다시 배포**: 3장 방법 B의 '받는 사람이 할 일'을 순서대로 해요.
+5. **사용 금액 한도 걸기**: 내 키에 Anthropic Console과 OpenAI 결제 설정에서 월 사용 한도를 걸어 두세요.
 
 ---
 
 ## 3. GitHub·Vercel·API 키 넘기는 방법
 
-### 지금 구조
+### 넘기기 전 구조 (2026-11-04)
 
 ```
-GitHub  jaewonbbae/E-um  ──push──▶  Vercel (이전 담당 팀)  ──▶  e-um-eight.vercel.app
+GitHub  jaewonbbae/E-um-web  ──push──▶  Vercel (이전 담당 팀)  ──▶  e-um-eight.vercel.app
    ▲ 쓰기 권한                         └ 환경 변수: 이전 담당의 API 키 (비용도 이전 담당)
 sehyun6580-max
 ```
@@ -93,35 +94,36 @@ sehyun6580-max
 - 하지만 **Vercel 화면(배포 기록, 오류 로그, 환경 변수)은 볼 수 없어요.** Vercel 무료(Hobby) 플랜은 다른 사람을 팀 멤버로 추가할 수 없기 때문이에요.
 - 무료 플랜에서는 저장소가 **비공개**면 협업자의 커밋이 배포되지 않아요. 그래서 저장소를 공개로 두고 있어요.
 
-### 방법 A: 지금 구조 그대로 쓰기
+### 방법 A: 지금 구조 그대로 쓰기 (쓰지 않기로 했어요)
 
 - 받는 사람은 GitHub에만 올리고, Vercel 설정이 필요하면 이전 담당에게 부탁해요.
 - **비용은 계속 이전 담당의 키로 나가요.** 이전 담당이 더 이상 참여하지 않는다면 맞지 않는 방식이에요.
 
-### 방법 B: 완전히 넘기기 (이전 담당이 손을 뗀다면 추천)
+### 방법 B: 완전히 넘기기 ✅ 이걸로 정했어요 (2026-11-04)
 
 **이전 담당(`jaewonbbae`)이 할 일**
-1. GitHub 저장소에서 **Settings → General → 맨 아래 Danger Zone → Transfer ownership**을 눌러요.
-2. 새 주인에 `sehyun6580-max`를 입력하고, 확인 칸에 저장소 이름을 적어 이전해요.
-3. 받는 사람의 새 사이트가 정상으로 뜨는 것을 확인한 뒤, Vercel 프로젝트에서 **Settings → General → Delete Project**로 기존 프로젝트를 지워요. 그래야 이전 담당의 키로 비용이 나가지 않아요.
-4. 필요하면 Anthropic·OpenAI 콘솔에서 이 프로젝트에 쓰던 키를 삭제해요.
+1. ✅ 저장소 이름을 `E-um`에서 `E-um-web`으로 바꿨어요. 받는 사람 계정에 이미 `E-um`이라는 다른 저장소가 있어서예요.
+2. ✅ `sehyun6580-max`에게 저장소 이전 요청을 보냈어요.
+3. ⬜ 받는 사람의 새 사이트가 정상으로 뜨면, Vercel 프로젝트에서 **Settings → General → Delete Project**로 기존 프로젝트를 지워요. 그래야 이전 담당의 키로 비용이 나가지 않아요.
+4. ⬜ Anthropic·OpenAI 콘솔에서 이 프로젝트에 쓰던 키를 삭제해요.
 
 **받는 사람(`sehyun6580-max`)이 할 일**
 1. 이메일로 온 저장소 이전 요청을 수락해요. 하루 안에 수락하지 않으면 만료돼요.
 2. vercel.com에 GitHub 계정으로 가입하거나 로그인해요.
-3. **Add New → Project**에서 `sehyun6580-max/E-um`을 **Import**해요.
+3. **Add New → Project**에서 `sehyun6580-max/E-um-web`을 **Import**해요.
    - 목록에 안 보이면 **Adjust GitHub App Permissions**에서 이 저장소를 추가해요.
 4. **Environment Variables**에 자기 키를 넣어요.
    - `ANTHROPIC_API_KEY`
    - `OPENAI_API_KEY`
 5. **Deploy**를 누르면 새 주소(`e-um-….vercel.app`)가 생겨요.
-6. 저장소 설명의 홈페이지 주소, 이 문서, `CLAUDE.md`, 기능설명서에 적힌 사이트 주소를 새 주소로 바꿔요.
-7. 내 컴퓨터의 저장소 연결 주소도 바꿔요.
+6. 새 주소를 이전 담당에게 알려 줘요. 이전 담당이 그걸 보고 기존 Vercel 프로젝트를 지워요.
+7. 저장소 설명의 홈페이지 주소, 이 문서, `CLAUDE.md`, `README.md`, 기능설명서에 적힌 사이트 주소를 새 주소로 바꿔요.
+8. 이전을 수락하기 전에 내 컴퓨터로 받아 뒀다면, 저장소 연결 주소를 바꿔요.
    ```bash
-   git remote set-url origin https://github.com/sehyun6580-max/E-um.git
+   git remote set-url origin https://github.com/sehyun6580-max/E-um-web.git
    ```
 
-> 기존 Streamlit 저장소 `sehyun6580-max/E-um-Chatbot`과 이름이 달라서(`E-um`) 이전할 때 충돌하지 않아요.
+> 받는 사람 계정에는 이미 `E-um`(2026-10-24에 만든 다른 저장소)과 `E-um-Chatbot`(기능설명서의 Streamlit 버전)이 있어요. 겹치지 않도록 이 저장소 이름을 `E-um-web`으로 바꿨어요. 이름은 수락한 뒤 **Settings → General → Repository name**에서 언제든 바꿀 수 있어요.
 
 ### API 키 다루는 법
 
@@ -286,6 +288,6 @@ CLAUDE.md와 docs/HANDOFF.md를 먼저 끝까지 읽어 줘. 기능설명서 PDF
 ```
 첨부한 세 파일은 내가 이어받은 '이음(E-um)' 챗봇 프로젝트 자료야.
 CLAUDE.md는 이 프로젝트에서 일할 때 지켜야 할 규칙이니까 앞으로 그대로 따라 줘.
-코드는 https://github.com/jaewonbbae/E-um 에 있어.
+코드는 https://github.com/sehyun6580-max/E-um-web 에 있어.
 먼저 지금 상태 요약과 내가 먼저 해야 할 일 세 가지를 알려 줘.
 ```

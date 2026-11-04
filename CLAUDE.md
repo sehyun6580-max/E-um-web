@@ -12,10 +12,10 @@
 | 항목 | 내용 |
 | --- | --- |
 | 무엇 | 정답 대신 사용자가 자기 연애 기준을 스스로 찾도록 돕는 연애 상담 챗봇 + 서비스 소개 사이트 |
-| 실제 사이트 | https://e-um-eight.vercel.app (`/` 소개 페이지, `/chat` 챗봇) |
-| 저장소 | https://github.com/jaewonbbae/E-um (`main` = 실제 사이트) |
+| 실제 사이트 | 새 담당이 Vercel에 다시 배포한 주소예요 (HANDOFF 3장). 그 전까지는 https://e-um-eight.vercel.app 이고, 이 주소는 이전 담당 계정이라 곧 지워져요. **새 주소가 생기면 이 줄과 README를 고치세요.** (`/` 소개 페이지, `/chat` 챗봇) |
+| 저장소 | https://github.com/sehyun6580-max/E-um-web (`main` = 실제 사이트). 이전 전 주소는 `jaewonbbae/E-um-web`이에요 |
 | 기획 원본 | 「이음(E-um) 챗봇 기능설명서」(2026-11-04, @김세현). PDF는 공개 저장소라 넣지 않았어요. 사용자가 첨부하면 그 내용을 기준으로 삼으세요. |
-| 이전 버전 | `sehyun6580-max/E-um-Chatbot` (Python Streamlit). 이 저장소와 별개예요. 사용자가 요청하지 않으면 건드리지 마세요. |
+| 이전 버전 | `sehyun6580-max/E-um-Chatbot` (Python Streamlit)과 `sehyun6580-max/E-um`(더 예전 프로젝트)은 이 저장소와 별개예요. 사용자가 요청하지 않으면 건드리지 마세요. |
 
 ## 2. 기술 스택
 
