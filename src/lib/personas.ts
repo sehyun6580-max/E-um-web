@@ -80,8 +80,9 @@ export const PRESETS: Persona[] = [
     intro: "기본 상담사예요. 내 말투에 맞춰 차분하게 들어줘요.",
   },
   {
+    // 처음 이름은 '제임스'였어요. 이미 이 캐릭터를 고른 사람의 선택이 풀리지 않게 id는 그대로 둬요.
     id: "james",
-    name: "제임스",
+    name: "재현",
     gender: "male",
     age: "30s",
     traits: ["듬직한", "자상한", "차분한"],
