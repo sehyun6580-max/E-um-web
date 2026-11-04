@@ -55,25 +55,44 @@ export const normalizeId = (name: string) => name.trim().toLowerCase();
 
 export type LoginResult =
   | { ok: true; account: Account; created: boolean }
-  | { ok: false; error: string };
+  | { ok: false; error: string; nameTaken?: boolean };
 
-export async function login(name: string, password: string): Promise<LoginResult> {
+/**
+ * 이름과 비밀번호가 둘 다 맞는 계정으로 들어간다.
+ * 같은 이름(동명이인)이 이미 있는데 비밀번호가 다르면, 바로 만들지 않고 nameTaken으로 알린다.
+ * 사용자가 확인하면 createNew로 다시 불러 같은 이름의 새 공간을 만든다.
+ */
+export async function login(
+  name: string,
+  password: string,
+  { createNew = false }: { createNew?: boolean } = {},
+): Promise<LoginResult> {
   const trimmed = name.trim();
   if (trimmed.length < 2) return { ok: false, error: "이름은 두 글자 이상 적어 주세요." };
   if (password.length < 4) return { ok: false, error: "비밀번호는 네 글자 이상이어야 해요." };
 
-  const id = normalizeId(trimmed);
+  const base = normalizeId(trimmed);
   const accounts = read<Record<string, Account>>(ACCOUNTS_KEY, {});
-  const existing = accounts[id];
+  const sameName = Object.values(accounts).filter((a) => normalizeId(a.name) === base);
 
-  if (existing) {
-    const hash = await sha256(existing.salt + password);
-    if (hash !== existing.hash) {
-      return { ok: false, error: "비밀번호가 맞지 않아요. 처음 만든 비밀번호를 적어 주세요." };
+  for (const existing of sameName) {
+    if ((await sha256(existing.salt + password)) === existing.hash) {
+      write(SESSION_KEY, existing.id);
+      return { ok: true, account: existing, created: false };
     }
-    write(SESSION_KEY, id);
-    return { ok: true, account: existing, created: false };
   }
+
+  if (sameName.length > 0 && !createNew) {
+    return {
+      ok: false,
+      nameTaken: true,
+      error: "이 이름으로 만든 공간이 이미 있는데, 비밀번호가 맞지 않아요. 내 공간이라면 처음 만든 비밀번호를 적어 주세요.",
+    };
+  }
+
+  // 처음 쓰는 이름은 예전처럼 이름 그대로를 id로 쓰고, 동명이인은 뒤에 짧은 꼬리표를 붙인다.
+  let id = base;
+  while (accounts[id]) id = `${base}#${crypto.randomUUID().slice(0, 8)}`;
 
   const salt = crypto.randomUUID();
   const account: Account = {

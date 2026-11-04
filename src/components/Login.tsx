@@ -10,16 +10,26 @@ export default function Login({ onLogin }: { onLogin: (account: Account) => void
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
+  // 같은 이름이 이미 있고 비밀번호가 다를 때, 새 공간을 만들지 물어본다.
+  const [nameTaken, setNameTaken] = useState(false);
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  async function submit(createNew: boolean) {
     if (pending) return;
     setPending(true);
     setError("");
-    const result = await login(name, password);
+    const result = await login(name, password, { createNew });
     setPending(false);
-    if (result.ok) onLogin(result.account);
-    else setError(result.error);
+    if (result.ok) {
+      onLogin(result.account);
+      return;
+    }
+    setError(result.error);
+    setNameTaken(Boolean(result.nameTaken));
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    submit(false);
   }
 
   return (
@@ -39,7 +49,10 @@ export default function Login({ onLogin }: { onLogin: (account: Account) => void
               autoComplete="username"
               placeholder="나를 부를 이름"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                setNameTaken(false);
+              }}
               maxLength={20}
               required
             />
@@ -52,7 +65,10 @@ export default function Login({ onLogin }: { onLogin: (account: Account) => void
               autoComplete="current-password"
               placeholder="네 글자 이상"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setNameTaken(false);
+              }}
               required
             />
           </label>
@@ -61,6 +77,18 @@ export default function Login({ onLogin }: { onLogin: (account: Account) => void
             <p className="form-error" role="alert">
               {error}
             </p>
+          )}
+
+          {nameTaken && (
+            <div className="login-taken">
+              <p>
+                다른 사람이 먼저 이 이름을 썼다면, 같은 이름으로 내 공간을 따로 만들 수 있어요. 다음부터는
+                이름과 지금 적은 비밀번호로 들어오면 돼요.
+              </p>
+              <button className="btn btn-outline btn-block" type="button" onClick={() => submit(true)} disabled={pending}>
+                같은 이름으로 새 공간 만들기
+              </button>
+            </div>
           )}
 
           <button className="btn btn-dark btn-block" type="submit" disabled={pending}>
