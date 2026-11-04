@@ -131,12 +131,12 @@ export default function LandingPage() {
       <header className="lp-header">
         <div className="lp-wrap lp-header-inner">
           <Link href="/" className="lp-logo" aria-label="이음 E-um 처음으로">
-            e-um
+            E-um
           </Link>
           <nav className="lp-nav" aria-label="소개 메뉴">
-            <a href="#principles">이음은</a>
-            <a href="#modes">두 가지 모드</a>
-            <a href="#prism">기억과 기준의 방</a>
+            <a href="#principles">소개</a>
+            <a href="#modes">듀얼모드</a>
+            <a href="#prism">Mind Prism</a>
             <a href="#how">사용법</a>
             <a href="#faq">자주 묻는 질문</a>
           </nav>
@@ -462,7 +462,7 @@ export default function LandingPage() {
       <footer className="lp-footer">
         <div className="lp-wrap lp-footer-inner">
           <div>
-            <p className="lp-logo lp-logo--light">e-um</p>
+            <p className="lp-logo lp-logo--light">E-um</p>
             <nav className="lp-footer-nav" aria-label="바닥글 메뉴">
               <Link href="/chat">대화 시작하기</Link>
               <a href="#faq">자주 묻는 질문</a>
