@@ -3,6 +3,10 @@
 정답 대신, 사용자가 자기 연애 기준을 스스로 찾도록 돕는 연애 상담 챗봇입니다.
 왼쪽 '이음'에서 대화하고, 오른쪽 'Mind Prism · 기억과 기준의 방'에 찾은 기준을 포스트잇으로 남깁니다.
 
+- 실제 사이트: https://e-um-eight.vercel.app (소개 `/`, 챗봇 `/chat`)
+- 인수인계 문서: [docs/HANDOFF.md](docs/HANDOFF.md)
+- Claude 작업 지침: [CLAUDE.md](CLAUDE.md)
+
 ## 로컬에서 실행
 
 ```bash
