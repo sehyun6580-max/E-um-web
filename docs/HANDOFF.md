@@ -3,7 +3,7 @@
 - 작성일: 2026-11-04
 - 넘겨주는 사람: `jaewonbbae` (이전 담당)
 - 받는 사람: `sehyun6580-max`
-- 진행 상황: 이전 담당은 이 프로젝트에서 손을 떼요. 2026-11-04에 저장소를 `sehyun6580-max`에게 넘기는 요청을 보냈어요 (3장 방법 B).
+- 진행 상황: 이전 담당은 이 프로젝트에서 손을 떼요. 2026-11-04에 저장소를 `sehyun6580-max`에게 넘겼고, 받는 사람이 이전을 수락해 자기 Vercel에 다시 배포했어요 (3장 방법 B).
 - Claude에게 줄 작업 지침은 저장소 맨 위의 [`CLAUDE.md`](../CLAUDE.md)에 따로 있어요. Claude Code로 이 저장소를 열면 자동으로 읽혀요.
 
 ---
@@ -18,13 +18,15 @@
 
 ## 1. 지금 상태 (2026-11-04 기준)
 
+> 아래 '확인한 것'은 이전 담당이 예전 주소(`e-um-eight.vercel.app`)에서 확인한 내용이에요. 새 주소에서도 `/`, `/chat`, `/api/status`(`{"anthropic":true,"openai":true}`)가 정상인 것을 확인했어요.
+
 | 항목 | 상태 |
 | --- | --- |
-| 실제 사이트 | https://e-um-eight.vercel.app (소개 `/`, 챗봇 `/chat`). 이전 담당의 Vercel에 있어서, 새 담당이 다시 배포하면 이전 담당이 지울 예정이에요 |
+| 실제 사이트 | https://e-um-pearl.vercel.app (소개 `/`, 챗봇 `/chat`). 예전 주소 `e-um-eight.vercel.app`은 이전 담당의 Vercel에 있어서 이전 담당이 지울 예정이에요 |
 | 저장소 | https://github.com/sehyun6580-max/E-um-web (공개, `main` 브랜치). 수락 전 주소는 `jaewonbbae/E-um-web`이고, 처음 이름은 `E-um`이었어요. 옛 주소로 들어가도 자동으로 넘어가요 |
-| Vercel 프로젝트 | https://vercel.com/2026-uu-digital-healthcare-hackathon/e-um (이전 담당 계정의 팀). 새 담당이 자기 Vercel에 새로 만들어요 |
-| API 키 | Vercel 환경 변수에 `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` 둘 다 들어 있어요 (이전 담당의 키, 다시 배포한 뒤 삭제 예정) |
-| 저장소 주인 | 이전을 수락하면 `sehyun6580-max`가 주인이 돼요 |
+| Vercel 프로젝트 | https://vercel.com/sehyun6580-5405/e-um (새 담당 계정). 예전 프로젝트 `vercel.com/2026-uu-digital-healthcare-hackathon/e-um`은 이전 담당이 지울 예정이에요 |
+| API 키 | 새 Vercel 프로젝트 환경 변수에 새 담당의 `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` 둘 다 들어 있어요. 이전 담당의 키는 삭제 예정이에요 |
+| 저장소 주인 | `sehyun6580-max` (2026-11-04 이전 수락) |
 | 자동 배포 | `main`에 올리면 실제 사이트에 1~2분 안에 반영되고, PR마다 미리보기 주소가 생겨요 |
 
 **확인한 것**
@@ -108,16 +110,16 @@ sehyun6580-max
 4. ⬜ Anthropic·OpenAI 콘솔에서 이 프로젝트에 쓰던 키를 삭제해요.
 
 **받는 사람(`sehyun6580-max`)이 할 일**
-1. 이메일로 온 저장소 이전 요청을 수락해요. 하루 안에 수락하지 않으면 만료돼요.
-2. vercel.com에 GitHub 계정으로 가입하거나 로그인해요.
-3. **Add New → Project**에서 `sehyun6580-max/E-um-web`을 **Import**해요.
+1. ✅ 이메일로 온 저장소 이전 요청을 수락해요. 하루 안에 수락하지 않으면 만료돼요.
+2. ✅ vercel.com에 GitHub 계정으로 가입하거나 로그인해요.
+3. ✅ **Add New → Project**에서 `sehyun6580-max/E-um-web`을 **Import**해요.
    - 목록에 안 보이면 **Adjust GitHub App Permissions**에서 이 저장소를 추가해요.
-4. **Environment Variables**에 자기 키를 넣어요.
+4. ✅ **Environment Variables**에 자기 키를 넣어요.
    - `ANTHROPIC_API_KEY`
    - `OPENAI_API_KEY`
-5. **Deploy**를 누르면 새 주소(`e-um-….vercel.app`)가 생겨요.
+5. ✅ **Deploy**를 누르면 새 주소가 생겨요. → https://e-um-pearl.vercel.app
 6. 새 주소를 이전 담당에게 알려 줘요. 이전 담당이 그걸 보고 기존 Vercel 프로젝트를 지워요.
-7. 저장소 설명의 홈페이지 주소, 이 문서, `CLAUDE.md`, `README.md`, 기능설명서에 적힌 사이트 주소를 새 주소로 바꿔요.
+7. 저장소 설명의 홈페이지 주소, 이 문서, `CLAUDE.md`, `README.md`, 기능설명서에 적힌 사이트 주소를 새 주소로 바꿔요. (이 문서, `CLAUDE.md`, `README.md`는 ✅)
 8. 이전을 수락하기 전에 내 컴퓨터로 받아 뒀다면, 저장소 연결 주소를 바꿔요.
    ```bash
    git remote set-url origin https://github.com/sehyun6580-max/E-um-web.git
