@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 const ITEMS = [
   { id: "principles", label: "소개" },
   { id: "modes", label: "듀얼모드" },
+  { id: "characters", label: "캐릭터" },
   { id: "prism", label: "Mind Prism" },
+  { id: "letter", label: "화해 편지" },
   { id: "how", label: "사용법" },
   { id: "faq", label: "자주 묻는 질문" },
 ];

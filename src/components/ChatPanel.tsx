@@ -1,15 +1,28 @@
 "use client";
 
 import { useEffect, useRef, useState, type RefObject } from "react";
-import type { ChatMessage, Mode } from "@/lib/types";
+import type { ChatMessage, Mode, Persona, Topic } from "@/lib/types";
 import { parseFlip, parseReply } from "@/lib/reply";
-import Orb from "./Orb";
+import { DEFAULT_PERSONA_ID, MODE_SHORT, TOPIC_INFO, greeting } from "@/lib/personas";
+import PersonaAvatar from "./PersonaAvatar";
 
-const EXAMPLES = [
-  { topic: "연락", text: "연락이 뜸해져서 자꾸 마음이 쓰여요" },
-  { topic: "기념일", text: "기념일을 잊어버린 애인, 제가 예민한 걸까요?" },
-  { topic: "이성 친구", text: "애인이 이성 친구랑 단둘이 여행을 간대요" },
-];
+const EXAMPLES: Record<Topic, { topic: string; text: string }[]> = {
+  dating: [
+    { topic: "연락", text: "연락이 뜸해져서 자꾸 마음이 쓰여요" },
+    { topic: "기념일", text: "기념일을 잊어버린 애인, 제가 예민한 걸까요?" },
+    { topic: "이성 친구", text: "애인이 이성 친구랑 단둘이 여행을 간대요" },
+  ],
+  some: [
+    { topic: "먼저 연락", text: "썸 타는 사람이 답장은 하는데 먼저 연락은 안 해요" },
+    { topic: "고백 타이밍", text: "이 정도면 고백해도 될지 모르겠어요" },
+    { topic: "애매한 사이", text: "다른 사람이랑도 연락하는 것 같아서 신경 쓰여요" },
+  ],
+  married: [
+    { topic: "집안일", text: "집안일을 저만 하는 것 같아 자꾸 서운해요" },
+    { topic: "양가 가족", text: "명절마다 양가 문제로 배우자와 다퉈요" },
+    { topic: "대화", text: "아이 얘기 말고는 배우자와 나눌 대화가 없어요" },
+  ],
+};
 
 const MODE_LABEL: Record<Mode, string> = { F: "감성 공감 모드", T: "팩트 폭격 모드" };
 const PLACEHOLDER: Record<Mode, string> = {
@@ -22,6 +35,9 @@ interface Props {
   userName: string;
   messages: ChatMessage[];
   mode: Mode;
+  persona: Persona;
+  topic: Topic;
+  onOpenPersona: () => void;
   busy: null | "chat" | "flip";
   onMode: (mode: Mode) => void;
   onSend: (text: string) => void;
@@ -35,6 +51,9 @@ export default function ChatPanel({
   userName,
   messages,
   mode,
+  persona,
+  topic,
+  onOpenPersona,
   busy,
   onMode,
   onSend,
@@ -49,6 +68,7 @@ export default function ChatPanel({
   const stickRef = useRef(true);
 
   const hasUserTurn = messages.some((m) => m.role === "user");
+  const hi = greeting(persona, userName);
 
   useEffect(() => {
     const el = logRef.current;
@@ -102,10 +122,29 @@ export default function ChatPanel({
   return (
     <section className="card card--eum" data-mode={mode} aria-labelledby="eum-title">
       <header className="card-head">
-        <h1 id="eum-title" ref={titleRef} className="eum-title">
-          이음 <span className="eum-title-en">E-um</span>
-        </h1>
-        <p className="card-sub">정답 대신, 당신의 기준을 함께 찾아요</p>
+        <div>
+          <h1 id="eum-title" ref={titleRef} className="eum-title">
+            이음 <span className="eum-title-en">E-um</span>
+          </h1>
+          <p className="card-sub">정답 대신, 당신의 기준을 함께 찾아요</p>
+        </div>
+        <button
+          type="button"
+          className="persona-btn"
+          onClick={onOpenPersona}
+          aria-haspopup="dialog"
+          title="상담 캐릭터와 고민 종류 바꾸기"
+        >
+          <PersonaAvatar persona={persona} size={32} />
+          <span className="persona-btn-text">
+            <span className="persona-btn-name">{persona.name}</span>
+            <span className="persona-btn-sub">{TOPIC_INFO[topic].label} 고민</span>
+          </span>
+          <svg className="persona-btn-caret" viewBox="0 0 20 20" width="14" height="14" aria-hidden>
+            <path d="M6 8l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span className="sr-only">캐릭터 바꾸기</span>
+        </button>
       </header>
 
       <div
@@ -117,11 +156,11 @@ export default function ChatPanel({
       >
         {messages.length === 0 ? (
           <div className="empty">
-            <Orb mode={mode} size={64} />
-            <p className="empty-hello">안녕하세요, {userName}님</p>
-            <p className="empty-ask">오늘은 어떤 마음이 쓰이나요?</p>
+            <PersonaAvatar persona={{ ...persona, mode }} size={64} />
+            <p className="empty-hello">{hi.hello}</p>
+            <p className="empty-ask">{hi.ask}</p>
             <ul className="examples">
-              {EXAMPLES.map((ex) => (
+              {EXAMPLES[topic].map((ex) => (
                 <li key={ex.text}>
                   <button type="button" className="example" onClick={() => pickExample(ex.text)}>
                     <span className="example-topic">{ex.topic}</span>
@@ -301,13 +340,22 @@ function BotReply({
   const other: Mode = mode === "F" ? "T" : "F";
   const { title, body, other: otherQuestion } = parseReply(msg.content);
   const empty = !title && !body;
+  const character =
+    msg.personaId && msg.personaId !== DEFAULT_PERSONA_ID && msg.personaName ? msg.personaName : "";
 
   return (
     <article className="msg-bot" data-mode={mode}>
-      <span className="bot-avatar" aria-label={`${mode}봇`}>
-        {mode}봇
+      <span
+        className={`bot-avatar${character ? " bot-avatar--char" : ""}`}
+        aria-label={character ? `${character} (${mode}봇)` : `${mode}봇`}>
+        {character ? character.slice(0, 1) : `${mode}봇`}
       </span>
       <div className="bot-content">
+        {character && (
+          <span className="bot-name">
+            {character} · {MODE_SHORT[mode]}
+          </span>
+        )}
         {title && <h3 className="reply-title">{title}</h3>}
         {body && <p className="reply-body">{body}</p>}
         {empty && !msg.error && <Typing />}

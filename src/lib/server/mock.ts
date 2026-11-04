@@ -2,7 +2,7 @@
  * API 키가 없을 때 쓰는 데모 응답.
  * 실제 모델처럼 글자가 조금씩 나오게 해서 화면 흐름을 확인할 수 있게 한다.
  */
-import type { ApiMessage, Mode, Stage } from "../types";
+import type { ApiMessage, Draft, Mode, Speech, Stage } from "../types";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -15,6 +15,7 @@ export async function* typeOut(text: string): AsyncGenerator<string> {
 }
 
 const CRISIS = /죽고\s*싶|자살|자해|사라지고\s*싶|살기\s*싫|목숨/;
+const DANGER = /때렸|때려|맞았|폭행|협박|스토킹|따라다|감시|위치\s*추적|강제로|연락\s*하지\s*말/;
 const CLOSING = /그래야겠|얘기해\s*볼|말해\s*볼|고마워|고맙|감사|ㅇㅇ\s*$/;
 
 function isPolite(text: string): boolean {
@@ -106,9 +107,14 @@ const REPLIES: Record<Mode, Record<Stage, Variant>> = {
   },
 };
 
-export function mockChat(mode: Mode, stage: Stage, messages: ApiMessage[]): string {
+export function mockChat(
+  mode: Mode,
+  stage: Stage,
+  messages: ApiMessage[],
+  speech: Speech = "auto",
+): string {
   const last = [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
-  const polite = isPolite(last);
+  const polite = speech === "auto" ? isPolite(last) : speech === "polite";
 
   if (CRISIS.test(last)) {
     return tagged(
@@ -116,6 +122,16 @@ export function mockChat(mode: Mode, stage: Stage, messages: ApiMessage[]): stri
       polite
         ? "그런 마음이 들 만큼 많이 힘드셨군요. 지금 이 고민은 잠시 내려놓고, 자살예방상담전화 109에 연락해 보세요. 24시간 언제든 무료로 이야기를 들어줘요. 당장 위험하다고 느껴지면 112나 119에 바로 연락해 주세요."
         : "그런 마음이 들 만큼 많이 힘들었구나. 지금 이 고민은 잠깐 내려놓고, 자살예방상담전화 109에 연락해 봐. 24시간 언제든 무료로 이야기를 들어줘. 당장 위험하다고 느껴지면 112나 119에 바로 연락해 줘.",
+      "",
+    );
+  }
+
+  if (DANGER.test(last)) {
+    return tagged(
+      polite ? "관계보다 당신의 안전이 먼저예요" : "관계보다 네 안전이 먼저야",
+      polite
+        ? "그런 일이 있었다면 혼자 감당하지 않으셔도 돼요. 당신 탓이 아니에요. 지금 위험하다면 112에 바로 연락하시고, 가정폭력·데이트폭력·스토킹은 여성긴급전화 1366에서 24시간 상담받을 수 있어요."
+        : "그런 일이 있었다면 혼자 감당하지 않아도 돼. 네 탓이 아니야. 지금 위험하다면 112에 바로 연락하고, 가정폭력·데이트폭력·스토킹은 여성긴급전화 1366에서 24시간 상담받을 수 있어.",
       "",
     );
   }
@@ -152,4 +168,29 @@ export function mockDraft(messages: ApiMessage[]): { topic: string; criterion: s
         : criterionSource
       : "";
   return { topic, criterion };
+}
+
+
+export function mockLetter(
+  messages: ApiMessage[],
+  draft: Draft,
+  to: string,
+): { blocked: boolean; letter: string; reason: string } {
+  const users = messages.filter((m) => m.role === "user").map((m) => m.content);
+  if (users.some((u) => CRISIS.test(u) || DANGER.test(u))) {
+    return {
+      blocked: true,
+      letter: "",
+      reason:
+        "대화에 안전이 걱정되는 이야기가 있어서, 지금은 화해 편지보다 당신의 안전을 먼저 챙기면 좋겠어요. 혼자 판단하기 어렵다면 아래 번호로 먼저 이야기해 보세요.",
+    };
+  }
+  const call = to.trim() ? `${to.trim()}, ` : "";
+  const topic = draft.topic || "요즘 우리 사이에 있었던 일";
+  const criterion = draft.criterion || "서로 바쁠 때도 미리 한마디 해 주는 것";
+  return {
+    blocked: false,
+    reason: "",
+    letter: `${call}${topic} 때문에 요즘 내 마음이 많이 복잡했어. 그때 서운한 마음이 앞서서 내 마음을 제대로 설명하지 못한 것 같아. 곰곰이 생각해 보니 나한테 중요한 건 이거였어. "${criterion}" 너를 탓하려는 게 아니라, 내가 어떤 사람인지 알려주고 싶었어. 네 생각도 듣고 싶어서, 시간 괜찮을 때 얼굴 보고 이야기하자. 지금 바로가 아니어도 괜찮아, 기다릴게. (데모 초안이에요. API 키를 연결하면 실제 대화로 써요.)`,
+  };
 }

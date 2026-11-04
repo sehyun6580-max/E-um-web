@@ -4,10 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Account } from "@/lib/storage";
 import { loadData, saveData } from "@/lib/storage";
-import type { ChatMessage, Mode, Note, NoteField, UserData } from "@/lib/types";
+import type {
+  ChatMessage,
+  LetterDraft,
+  Mode,
+  Note,
+  NoteField,
+  Persona,
+  Topic,
+  UserData,
+} from "@/lib/types";
 import { ERROR_MARK, REFUSAL_MARK, countUserTurns, toApiMessages } from "@/lib/reply";
+import { DEFAULT_PERSONA_ID, MAX_CUSTOM_PERSONAS, isPreset, resolvePersona } from "@/lib/personas";
 import ChatPanel from "./ChatPanel";
 import PrismPanel from "./PrismPanel";
+import PersonaSheet from "./PersonaSheet";
+import LetterSheet from "./LetterSheet";
 import LoveLetter, { LetterDrop } from "./LoveLetter";
 import Orb from "./Orb";
 
@@ -29,6 +41,7 @@ export default function Workspace({
   const [busy, setBusy] = useState<Busy>(null);
   const [drafting, setDrafting] = useState(false);
   const [prismNotice, setPrismNotice] = useState("");
+  const [sheet, setSheet] = useState<null | "persona" | "letter">(null);
   const [providers, setProviders] = useState<{ anthropic: boolean; openai: boolean } | null>(
     null,
   );
@@ -40,6 +53,10 @@ export default function Workspace({
   useEffect(() => {
     saveData(account.id, data);
   }, [account.id, data]);
+
+  const persona = resolvePersona(data.personaId, data.customPersonas);
+  // 미리 만든 캐릭터는 id만 보내고, 직접 만든 캐릭터는 서버가 다시 검사할 내용을 함께 보낸다.
+  const personaPayload = isPreset(persona.id) ? { id: persona.id } : persona;
 
   useEffect(() => {
     fetch("/api/status")
@@ -93,7 +110,13 @@ export default function Workspace({
     setBusy("chat");
     await runStream(
       "/api/chat",
-      { mode, messages: toApiMessages(history), userTurn: countUserTurns(history) },
+      {
+        mode,
+        messages: toApiMessages(history),
+        userTurn: countUserTurns(history),
+        persona: personaPayload,
+        topic: data.topic,
+      },
       botId,
     );
     setBusy(null);
@@ -115,6 +138,8 @@ export default function Workspace({
       role: "assistant",
       kind: "reply",
       mode: data.mode,
+      personaId: persona.id,
+      personaName: persona.name,
       content: "",
       createdAt: now,
     };
@@ -146,6 +171,7 @@ export default function Workspace({
     const history = data.messages.slice(0, idx);
     const fresh: ChatMessage = {
       ...target,
+      ...(target.kind === "flip" ? {} : { personaId: persona.id, personaName: persona.name }),
       id: uid(),
       content: "",
       error: undefined,
@@ -164,6 +190,36 @@ export default function Workspace({
 
   function setMode(mode: Mode) {
     setData((d) => ({ ...d, mode }));
+  }
+
+  /** 캐릭터를 고르면 그 캐릭터의 기본 상담 스타일로 바뀐다 (대화 중에도 다시 바꿀 수 있다). */
+  function pickPersona(p: Persona) {
+    setData((d) => ({ ...d, personaId: p.id, mode: p.mode }));
+  }
+
+  function createPersona(p: Persona) {
+    setData((d) => ({
+      ...d,
+      customPersonas: [...d.customPersonas, p].slice(-MAX_CUSTOM_PERSONAS),
+      personaId: p.id,
+      mode: p.mode,
+    }));
+  }
+
+  function deletePersona(id: string) {
+    setData((d) => ({
+      ...d,
+      customPersonas: d.customPersonas.filter((p) => p.id !== id),
+      personaId: d.personaId === id ? DEFAULT_PERSONA_ID : d.personaId,
+    }));
+  }
+
+  function setTopic(topic: Topic) {
+    setData((d) => ({ ...d, topic }));
+  }
+
+  function patchLetter(patch: Partial<LetterDraft>) {
+    setData((d) => ({ ...d, letter: { ...d.letter, ...patch } }));
   }
 
   function setDraftField(field: NoteField, value: string) {
@@ -233,6 +289,15 @@ export default function Workspace({
     setPrismNotice("포스트잇을 모두 뗐어요.");
   }
 
+  // 편지 초안에 넘길 메모: 지금 쓰는 칸이 비어 있으면 가장 최근에 붙인 포스트잇을 쓴다.
+  const latestNote = (field: NoteField) =>
+    [...data.notes].reverse().find((n) => n.field === field)?.text ?? "";
+  const letterMemo = {
+    topic: data.draft.topic.trim() || latestNote("topic"),
+    criterion: data.draft.criterion.trim() || latestNote("criterion"),
+    conclusion: data.draft.conclusion.trim() || latestNote("conclusion"),
+  };
+
   const demo = providers !== null && !providers.anthropic && !providers.openai;
   const partial = providers !== null && providers.anthropic !== providers.openai;
 
@@ -283,6 +348,9 @@ export default function Workspace({
             userName={account.name}
             messages={data.messages}
             mode={data.mode}
+            persona={persona}
+            topic={data.topic}
+            onOpenPersona={() => setSheet("persona")}
             busy={busy}
             onMode={setMode}
             onSend={send}
@@ -302,10 +370,33 @@ export default function Workspace({
             onFillDraft={fillDraft}
             onAttach={attachNotes}
             onClear={clearNotes}
+            onOpenLetter={() => setSheet("letter")}
           />
           <LoveLetter stageRef={stageRef} fromRef={eumTitleRef} toRef={prismTitleRef} />
         </div>
       </div>
+
+      <PersonaSheet
+        open={sheet === "persona"}
+        onClose={() => setSheet(null)}
+        topic={data.topic}
+        personaId={persona.id}
+        customs={data.customPersonas}
+        onTopic={setTopic}
+        onPick={pickPersona}
+        onCreate={createPersona}
+        onDelete={deletePersona}
+      />
+      <LetterSheet
+        open={sheet === "letter"}
+        onClose={() => setSheet(null)}
+        fromName={account.name}
+        letter={data.letter}
+        onLetter={patchLetter}
+        messages={toApiMessages(data.messages)}
+        memo={letterMemo}
+        busy={busy !== null}
+      />
     </div>
   );
 }

@@ -3,7 +3,14 @@
  * 계정과 기록은 이 브라우저(localStorage)에만 저장된다. 기기를 바꾸면 보이지 않는다.
  * 실제 서비스로 옮길 때는 서버 DB(예: Supabase, Vercel Postgres)로 바꾼다.
  */
-import type { UserData } from "./types";
+import type { Persona, UserData } from "./types";
+import {
+  DEFAULT_PERSONA_ID,
+  MAX_CUSTOM_PERSONAS,
+  readTopic,
+  resolvePersona,
+  sanitizePersona,
+} from "./personas";
 
 export interface Account {
   id: string;
@@ -125,17 +132,39 @@ export const emptyData = (): UserData => ({
   mode: "F",
   notes: [],
   draft: { topic: "", criterion: "", conclusion: "" },
+  personaId: DEFAULT_PERSONA_ID,
+  customPersonas: [],
+  topic: "dating",
+  letter: { to: "", text: "" },
 });
 
 export function loadData(id: string): UserData {
   const saved = read<Partial<UserData> | null>(dataKey(id), null);
   if (!saved) return emptyData();
   const base = emptyData();
+  const customPersonas = Array.isArray(saved.customPersonas)
+    ? saved.customPersonas
+        .map(sanitizePersona)
+        .filter((p): p is Persona => p !== null && p.id.startsWith("custom:"))
+        .slice(0, MAX_CUSTOM_PERSONAS)
+    : [];
+  const personaId =
+    typeof saved.personaId === "string"
+      ? resolvePersona(saved.personaId, customPersonas).id
+      : base.personaId;
+  const letter = saved.letter ?? base.letter;
   return {
     messages: Array.isArray(saved.messages) ? saved.messages : base.messages,
     mode: saved.mode === "T" ? "T" : "F",
     notes: Array.isArray(saved.notes) ? saved.notes : base.notes,
     draft: { ...base.draft, ...(saved.draft ?? {}) },
+    personaId,
+    customPersonas,
+    topic: readTopic(saved.topic),
+    letter: {
+      to: typeof letter.to === "string" ? letter.to : "",
+      text: typeof letter.text === "string" ? letter.text : "",
+    },
   };
 }
 

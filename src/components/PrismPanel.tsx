@@ -38,6 +38,7 @@ interface Props {
   onFillDraft: () => void;
   onAttach: () => void;
   onClear: () => void;
+  onOpenLetter: () => void;
 }
 
 export default function PrismPanel({
@@ -51,6 +52,7 @@ export default function PrismPanel({
   onFillDraft,
   onAttach,
   onClear,
+  onOpenLetter,
 }: Props) {
   const [confirmClear, setConfirmClear] = useState(false);
 
@@ -113,6 +115,16 @@ export default function PrismPanel({
           {notice}
         </p>
       </form>
+
+      <div className="reconcile">
+        <div className="reconcile-text">
+          <p className="reconcile-title">💌 이 마음, 상대에게 전해 볼까요?</p>
+          <p className="reconcile-sub">오늘 찾은 기준으로 화해 편지를 쓰고 링크로 보내요.</p>
+        </div>
+        <button type="button" className="btn btn-dark btn-sm" onClick={onOpenLetter}>
+          화해 편지 쓰기
+        </button>
+      </div>
 
       <div className="board">
         {notes.length === 0 ? (

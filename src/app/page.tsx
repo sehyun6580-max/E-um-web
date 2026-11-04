@@ -5,11 +5,14 @@ import Orb from "@/components/Orb";
 import FlowSection from "@/components/landing/FlowSection";
 import LandingNav from "@/components/landing/LandingNav";
 import { MockFlip, MockReply, NOTE_SAMPLES } from "@/components/landing/Mocks";
+import PersonaAvatar from "@/components/PersonaAvatar";
+import { PRESETS, TOPICS, TOPIC_INFO, personaMeta } from "@/lib/personas";
+import { letterFont } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "이음 E-um | 정답 대신 내 기준을 찾는 연애 상담 챗봇",
   description:
-    "이음은 헤어지라고도, 만나라고도 말하지 않는 연애 상담 챗봇이에요. 마음은 받아주고, 결론은 당신에게 돌려줘요.",
+    "이음은 헤어지라고도, 만나라고도 말하지 않는 연애 상담 챗봇이에요. 연애·썸·부부 고민을 원하는 캐릭터와 이야기하고, 화해 편지로 마음을 전해요.",
 };
 
 const PRINCIPLES = [
@@ -70,16 +73,16 @@ const HOW_TO = [
     text: "처음 적은 이름과 비밀번호로 내 공간이 바로 만들어져요. 다음에도 같은 걸로 들어오면 이어서 볼 수 있어요.",
   },
   {
-    title: "모드를 고르고 털어놓아요",
-    text: "위로가 필요하면 감성 공감, 냉정한 시선이 필요하면 팩트 폭격을 골라요. 빈 화면의 예시 문장을 눌러 시작해도 돼요.",
+    title: "캐릭터를 고르고 털어놓아요",
+    text: "대화창 오른쪽 위 버튼에서 이야기할 캐릭터와 고민 종류를 골라요. 위로가 필요하면 감성 공감, 냉정한 시선이 필요하면 팩트 폭격으로 바꿀 수 있어요.",
   },
   {
     title: "다른 시선으로도 봐요",
     text: "대화 중에 모드를 바꾸거나 🔍를 펼쳐 보세요. 상대 입장이 궁금하면 🔄 상대방 입장으로 뒤집어보기를 눌러요.",
   },
   {
-    title: "내 말로 남겨요",
-    text: "정리가 되면 ‘오늘 대화로 초안 채우기’로 초안을 받고, 내 말로 고친 뒤 📌 포스트잇 붙이기를 눌러요.",
+    title: "내 말로 남기고, 전해요",
+    text: "‘오늘 대화로 초안 채우기’로 초안을 받아 내 말로 고친 뒤 📌 포스트잇을 붙여요. 상대에게 전하고 싶다면 💌 화해 편지 쓰기로 이어가요.",
   },
 ];
 
@@ -90,7 +93,7 @@ const FAQ = [
   },
   {
     q: "대화 내용은 어디에 저장되나요?",
-    a: "대화와 포스트잇은 지금 쓰고 있는 브라우저에만 저장돼요. 서버에 따로 모아 두거나 다른 사람과 공유하지 않아요. 다만 답변을 만들기 위해 대화 내용이 Anthropic(Claude)과 OpenAI로 전달돼요.",
+    a: "대화와 포스트잇, 직접 만든 캐릭터는 지금 쓰고 있는 브라우저에만 저장돼요. 서버에 따로 모아 두거나 다른 사람과 공유하지 않아요. 다만 답변을 만들기 위해 대화 내용이 Anthropic(Claude)과 OpenAI로 전달돼요.",
   },
   {
     q: "다른 휴대폰이나 컴퓨터에서도 내 기록이 보이나요?",
@@ -102,7 +105,19 @@ const FAQ = [
   },
   {
     q: "반말로 써도 되나요?",
-    a: "네. 반말로 쓰면 반말로, 존댓말로 쓰면 존댓말로 답해요.",
+    a: "네. 기본 상담사 이음은 반말로 쓰면 반말로, 존댓말로 쓰면 존댓말로 답해요. 다른 캐릭터는 말투가 정해져 있어서, 원하는 말투가 있다면 직접 만들기에서 골라 주세요.",
+  },
+  {
+    q: "캐릭터마다 상담 내용이 달라지나요?",
+    a: "말투와 분위기만 달라져요. 아빠 캐릭터라고 해서 헤어지라고 정해 주거나 무조건 편을 들어 주지는 않아요. 다섯 원칙과 안전 안내는 어떤 캐릭터든 똑같이 지켜요.",
+  },
+  {
+    q: "부부 고민도 상담할 수 있나요?",
+    a: "네. 캐릭터 버튼에서 고민 종류를 ‘부부’로 바꾸면 집안일, 양가 가족, 육아처럼 결혼 생활에서 생기는 고민에 맞춰 이야기해요. 이혼하라거나 참고 살라는 결론은 내리지 않아요.",
+  },
+  {
+    q: "화해 편지는 어디에 저장되나요? 상대가 답하면 어떻게 알아요?",
+    a: "편지 내용은 링크 주소 안에만 담기고, 이음 서버에는 저장되지 않아요. 그래서 링크를 가진 사람은 누구나 읽을 수 있으니 상대에게만 보내 주세요. 상대가 답장을 고르면 답장 링크가 만들어지고, 그 링크를 상대가 다시 보내 주는 방식이에요.",
   },
   {
     q: "상대방 입장 글은 진짜 상대의 생각인가요?",
@@ -297,6 +312,57 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* 캐릭터 */}
+        <section className="lp-section" id="characters" aria-labelledby="characters-title">
+          <div className="lp-wrap">
+            <div className="lp-head">
+              <h2 id="characters-title" className="lp-h2">
+                누구와 이야기할지 골라요
+              </h2>
+              <p className="lp-p">
+                듬직한 선배, 다정한 언니, 말수 적은 아빠까지. 캐릭터는 말투와 분위기만 바꾸고,
+                이음의 다섯 원칙과 안전 안내는 그대로 지켜요.
+              </p>
+            </div>
+
+            <ul className="lp-chars">
+              {PRESETS.map((p) => (
+                <li key={p.id} className="lp-char">
+                  <div className="lp-char-top">
+                    <PersonaAvatar persona={p} size={44} />
+                    <div>
+                      <h3 className="lp-char-name">{p.name}</h3>
+                      <p className="lp-char-meta">{personaMeta(p)}</p>
+                    </div>
+                  </div>
+                  <p className="lp-char-intro">{p.intro}</p>
+                </li>
+              ))}
+            </ul>
+
+            <div className="lp-char-more">
+              <div>
+                <h3 className="lp-h3">직접 만들 수도 있어요</h3>
+                <p className="lp-p">
+                  성별, 나이대, 성격(세 가지까지), 반말이나 존댓말, 나와의 관계, 기본 상담 스타일을
+                  골라 나만의 캐릭터를 만들어요. 만든 캐릭터는 여섯 명까지 저장돼요.
+                </p>
+              </div>
+              <div>
+                <h3 className="lp-h3">고민 종류도 골라요</h3>
+                <ul className="lp-topics">
+                  {TOPICS.map((t) => (
+                    <li key={t}>
+                      <b>{TOPIC_INFO[t].label}</b>
+                      {TOPIC_INFO[t].hint}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* 뒤집어보기 */}
         <section className="lp-section lp-section--soft" id="flip" aria-labelledby="flip-title">
           <div className="lp-wrap lp-split lp-split--center">
@@ -359,6 +425,52 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* 화해 편지 */}
+        <section className="lp-section lp-section--soft" id="letter" aria-labelledby="letter-title">
+          <div className="lp-wrap lp-split lp-split--center">
+            <div className="lp-split-head">
+              <h2 id="letter-title" className="lp-h2">
+                💌 화해 편지로
+                <br />
+                다시 이어요
+              </h2>
+              <p className="lp-p">
+                마음이 정리됐다면, 이제 상대에게 전할 차례예요. 기억과 기준의 방에서{" "}
+                <b>화해 편지 쓰기</b>를 누르면 이음이 오늘 대화를 바탕으로 상대를 탓하지 않는
+                편지 초안을 써 줘요.
+              </p>
+              <ol className="lp-letter-steps">
+                <li>있었던 일, 내 감정, 바랐던 것, 제안 순서로 초안을 받아요.</li>
+                <li>내 말로 고친 뒤 링크를 만들어 카카오톡으로 보내요.</li>
+                <li>
+                  상대는 봉투를 열어 읽고 &lsquo;나도 얘기하고 싶어&rsquo;, &lsquo;조금 시간이
+                  필요해&rsquo;, 답장 쓰기 중에서 골라 답장 링크를 돌려보내요.
+                </li>
+              </ol>
+              <p className="lp-letter-note">
+                편지 내용은 링크 안에만 담기고 이음 서버에는 저장되지 않아요. 폭력이나 위협이
+                느껴지는 대화라면 편지 대신 도움받을 곳을 먼저 알려 드려요.
+              </p>
+            </div>
+            <div className="lp-letter-demo" aria-hidden>
+              <div className={`lp-letter-paper ${letterFont.className}`}>
+                <p className="lp-letter-to">To. 지민</p>
+                <p className="lp-letter-body">
+                  지민아, 지난 주말에 약속 시간을 바꾼 일 때문에 내가 크게 서운해했잖아. 그때는
+                  내 마음만 앞서서 제대로 설명하지 못했어. 나한테는 바쁜 것보다 미리 한마디 해
+                  주는 게 중요하더라. 네 이야기도 듣고 싶어. 시간 괜찮을 때 얼굴 보고 얘기하자.
+                </p>
+                <p className="lp-letter-from">From. 서연</p>
+              </div>
+              <div className="lp-letter-replies">
+                <span>나도 얘기하고 싶어</span>
+                <span>조금 시간이 필요해</span>
+                <span>답장 쓰기</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* 안전 */}
         <section className="lp-safety" aria-labelledby="safety-title">
           <div className="lp-wrap lp-safety-inner">
@@ -367,8 +479,9 @@ export default function LandingPage() {
             </h2>
             <p>
               대화 중에 스스로를 해치고 싶다는 신호가 보이면, 이음은 상담을 멈추고 자살예방상담전화
-              109를 먼저 안내해요. 24시간 언제든 무료로 이야기를 들어줘요. 지금 위험하다면 112나
-              119에 바로 연락해 주세요.
+              109를 먼저 안내해요. 24시간 언제든 무료로 이야기를 들어줘요. 폭력이나 스토킹이
+              걱정되는 이야기라면 화해보다 안전을 먼저 챙기도록 여성긴급전화 1366을 알려 드려요.
+              지금 위험하다면 112나 119에 바로 연락해 주세요.
             </p>
             <a className="lp-btn lp-btn--outline lp-btn--sm" href="tel:109">
               109에 전화하기

@@ -1,0 +1,355 @@
+/* ───────── 화해 편지 (/letter) ───────── */
+.lv {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 16px 40px;
+  background-color: #e6dff4;
+  background-image:
+    radial-gradient(900px 480px at 10% 105%, rgba(255, 255, 255, 0.95), transparent 62%),
+    radial-gradient(700px 380px at 95% -5%, rgba(255, 255, 255, 0.8), transparent 60%),
+    linear-gradient(180deg, #d8cdf0 0%, #e7e0f6 46%, #f2eefa 100%);
+  background-attachment: fixed;
+}
+
+.lv-top {
+  width: min(100%, 560px);
+  margin: 0 auto;
+}
+
+.lv-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.lv-wrap {
+  flex: 1;
+  width: min(100%, 560px);
+  margin: 28px auto 0;
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.lv-loading {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 80px;
+}
+
+.lv-empty {
+  background: #fff;
+  border-radius: 22px;
+  padding: 32px 28px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+}
+
+.lv-empty h1 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.lv-empty p {
+  margin: 0 0 20px;
+  color: var(--ink-2);
+}
+
+.lv-kicker {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lilac-ink);
+}
+
+/* 봉투 */
+.lv-envelope-wrap {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.lv-envelope {
+  position: relative;
+  width: min(100%, 400px);
+  aspect-ratio: 3 / 2;
+  border: 0;
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7f3fe 0%, #efe7fc 100%);
+  box-shadow:
+    0 1px 2px rgba(60, 40, 110, 0.06),
+    0 26px 50px -26px rgba(80, 60, 150, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lv-envelope:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 2px rgba(60, 40, 110, 0.06),
+    0 32px 56px -26px rgba(80, 60, 150, 0.5);
+}
+
+.lv-flap {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 62%;
+  background: linear-gradient(180deg, #e4d9f8, #d9cbf4);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.lv-seal {
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 46px;
+  height: 46px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f0789b;
+  box-shadow: 0 4px 10px -4px rgba(190, 60, 100, 0.6);
+  fill: #fff;
+}
+
+.lv-env-to {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 13%;
+  font-size: 19px;
+  color: var(--ink);
+}
+
+.lv-open-hint {
+  margin: -4px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* 편지지 */
+.lv-paper {
+  position: relative;
+  background-color: #fffdf9;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0 31px,
+    #efe9f6 31px 32px
+  );
+  background-position: 0 30px;
+  border-radius: 6px;
+  padding: 34px 32px 30px;
+  box-shadow:
+    0 1px 2px rgba(60, 40, 110, 0.06),
+    0 24px 48px -26px rgba(80, 60, 150, 0.45);
+  animation: lv-rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.lv-to {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.lv-body {
+  margin: 0;
+  font-size: 17px;
+  line-height: 32px;
+  color: #2b2735;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.lv-from {
+  margin: 14px 0 0;
+  display: grid;
+  justify-items: end;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.lv-from time {
+  font-family: var(--font);
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.lv-paper--reply {
+  display: grid;
+  gap: 10px;
+  background-image: none;
+  border-radius: 20px;
+}
+
+.lv-answer {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.lv-quote {
+  margin: 4px 0 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--lilac-2);
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+/* 답장 */
+.lv-reply {
+  background: #fff;
+  border-radius: 22px;
+  padding: 24px 24px 22px;
+  box-shadow: var(--card-shadow);
+  animation: lv-rise 0.7s 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.lv-reply-title {
+  margin: 0;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+}
+
+.lv-reply-sub {
+  margin: 4px 0 16px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.lv-choices {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.lv-choice {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px 12px 42px;
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.lv-choice input {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--lilac-ink);
+}
+
+.lv-choice:has(input:checked) {
+  border-color: var(--lilac);
+  background: var(--lilac-soft);
+}
+
+.lv-choice-label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.lv-choice-desc {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.lv-reply-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.lv-send-hint {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lv-foot {
+  width: min(100%, 560px);
+  margin: 36px auto 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.lv-foot p {
+  margin: 0 0 14px;
+  line-height: 1.7;
+}
+
+.lv-foot-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lv-foot-actions .btn,
+.lv-empty .btn {
+  text-decoration: none;
+}
+
+@keyframes lv-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .lv-wrap {
+    margin-top: 18px;
+  }
+
+  .lv-paper {
+    padding: 28px 22px 24px;
+  }
+
+  .lv-reply {
+    padding: 20px 18px 18px;
+  }
+
+  .lv-answer {
+    font-size: 21px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lv-paper,
+  .lv-reply {
+    animation: none;
+  }
+
+  .lv-envelope:hover {
+    transform: none;
+  }
+}
