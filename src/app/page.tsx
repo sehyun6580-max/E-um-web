@@ -137,6 +137,9 @@ const FAQ = [
   },
 ];
 
+const HERO_PERSONA = PRESETS.find((p) => p.id === "dad")!;
+const HERO_OTHERS = PRESETS.filter((p) => !["eum", "dad"].includes(p.id));
+
 export default function LandingPage() {
   return (
     <div className="lp">
@@ -162,6 +165,26 @@ export default function LandingPage() {
           <div className="lp-hero-visual" aria-hidden>
             <div className="lp-hero-orb">
               <Orb mode="F" size={340} />
+            </div>
+            <div className="lp-hero-persona">
+              <div className="lp-hero-persona-head">
+                <PersonaAvatar persona={HERO_PERSONA} size={30} />
+                <p className="lp-hero-persona-name">
+                  {HERO_PERSONA.name}
+                  <span>{personaMeta(HERO_PERSONA)}</span>
+                </p>
+              </div>
+              <p className="lp-hero-persona-text">
+                헤어질지는 네가 정하는 거야. 근데 뭐가 제일 못 견디겠는지, 그거부터 말해 봐.
+              </p>
+              <div className="lp-hero-persona-foot">
+                <span className="lp-hero-faces">
+                  {HERO_OTHERS.map((p) => (
+                    <PersonaAvatar key={p.id} persona={p} size={20} />
+                  ))}
+                </span>
+                다른 캐릭터도 있어요
+              </div>
             </div>
             <div className="lp-hero-card">
               <p className="msg-user">그냥 헤어지는 게 맞겠지?</p>

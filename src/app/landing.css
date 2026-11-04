@@ -323,6 +323,75 @@ html:has(.lp) {
   font-size: 14px;
 }
 
+/* 같은 질문에 다른 캐릭터가 답하는 작은 카드 */
+.lp-hero-persona {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  z-index: 1;
+  width: 250px;
+  padding: 14px 16px 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 48px -28px rgba(60, 40, 120, 0.45);
+}
+
+.lp-hero-persona-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.lp-hero-persona-name {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--lp-ink);
+}
+
+.lp-hero-persona-name span {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--lp-gray-2);
+}
+
+.lp-hero-persona-text {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--lp-ink-2);
+  word-break: keep-all;
+}
+
+.lp-hero-persona-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(23, 21, 28, 0.07);
+  font-size: 12px;
+  color: var(--lp-gray);
+}
+
+.lp-hero-faces {
+  display: inline-flex;
+}
+
+.lp-hero-faces .p-avatar {
+  margin-left: -5px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.lp-hero-faces .p-avatar:first-child {
+  margin-left: 0;
+}
+
 /* ───────── 공통 섹션 ───────── */
 .lp-section {
   padding: 128px 0;
@@ -1319,7 +1388,7 @@ html:has(.lp) {
     top: auto;
     right: auto;
     width: min(100% - 40px, 440px);
-    height: 380px;
+    height: 440px;
     margin: 48px auto 0;
     transform: none;
   }
@@ -1336,6 +1405,10 @@ html:has(.lp) {
   .lp-hero-card {
     width: min(100%, 340px);
     bottom: 28px;
+  }
+
+  .lp-hero-persona {
+    top: 0;
   }
 }
 
@@ -1483,7 +1556,12 @@ html:has(.lp) {
 
   .lp-hero-visual {
     width: calc(100% - 32px);
-    height: 360px;
+    height: 420px;
+  }
+
+  .lp-hero-persona {
+    width: min(100% - 24px, 250px);
+    padding: 12px 14px 10px;
   }
 
   .lp-hero-orb .orb {
