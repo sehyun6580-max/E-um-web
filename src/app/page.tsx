@@ -199,13 +199,13 @@ export default function LandingPage() {
           <div className="lp-wrap lp-hero-text">
             <p className="lp-tag">연애 상담 챗봇</p>
             <h1 id="hero-title" className="lp-h1">
-              헤어지라고도, 만나라고도
+              흩어진 감정이
               <br />
-              말하지 않을게요
+              선명한 기준이 되는 시간
             </h1>
             <p className="lp-lede">
               이음은 연애 고민을 들어주는 챗봇이에요. 속상한 마음은 그대로 받아주고, 그다음엔
-              내가 무엇을 중요하게 여기는지 같이 찾아봐요. 결론은 당신이 내려요.
+              내가 무엇을 중요하게 여기는지 같이 찾아봐요.
             </p>
             <div className="lp-actions">
               <Link href="/chat" className="lp-btn lp-btn--light">
