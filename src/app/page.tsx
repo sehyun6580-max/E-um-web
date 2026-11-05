@@ -93,7 +93,7 @@ const FAQ = [
   },
   {
     q: "대화 내용은 어디에 저장되나요?",
-    a: "대화와 포스트잇, 직접 만든 캐릭터는 지금 쓰고 있는 브라우저에만 저장돼요. 서버에 따로 모아 두거나 다른 사람과 공유하지 않아요. 다만 답변을 만들기 위해 대화 내용이 Anthropic(Claude)과 OpenAI로 전달돼요.",
+    a: "대화와 포스트잇, 직접 만든 캐릭터는 지금 쓰고 있는 브라우저에만 저장돼요. 서버에 따로 모아 두거나 다른 사람과 공유하지 않아요. 다만 답변을 만들기 위해 대화 내용이 Anthropic(Claude)과 OpenAI로 전달돼요. 자세한 내용은 바닥글의 개인정보처리방침에 있어요.",
   },
   {
     q: "다른 휴대폰이나 컴퓨터에서도 내 기록이 보이나요?",
@@ -597,6 +597,7 @@ export default function LandingPage() {
             <nav className="lp-footer-nav" aria-label="바닥글 메뉴">
               <Link href="/chat">대화 시작하기</Link>
               <a href="#faq">자주 묻는 질문</a>
+              <Link href="/privacy">개인정보처리방침</Link>
             </nav>
           </div>
           <div className="lp-footer-meta">

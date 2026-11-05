@@ -353,6 +353,12 @@ button:disabled {
   color: var(--muted);
 }
 
+.login-privacy {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ───────── 작업 화면 틀 ───────── */
 .app {
   min-height: 100dvh;

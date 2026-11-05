@@ -100,6 +100,10 @@ export default function Login({ onLogin }: { onLogin: (account: Account) => void
           처음이라면 적은 이름과 비밀번호로 내 공간이 바로 만들어져요.
           <br />
           데모 버전이라 계정과 기록은 이 브라우저에만 저장돼요.
+          <br />
+          <Link href="/privacy" className="login-privacy">
+            개인정보처리방침
+          </Link>
         </p>
         <Link href="/" className="login-back">
           이음이 어떤 챗봇인지 먼저 볼래요

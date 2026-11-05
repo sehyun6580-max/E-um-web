@@ -85,6 +85,9 @@ export default function LetterView({ letterFont }: { letterFont: string }) {
               이음 알아보기
             </Link>
           </div>
+          <Link className="lv-privacy" href="/privacy">
+            개인정보처리방침
+          </Link>
         </footer>
       )}
     </main>

@@ -314,6 +314,13 @@
   text-decoration: none;
 }
 
+.lv-privacy {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
 @keyframes lv-rise {
   from {
     opacity: 0;
