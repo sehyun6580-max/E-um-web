@@ -15,7 +15,7 @@ import {
   type ReplyPayload,
 } from "@/lib/letter";
 import LinkBox from "./LinkBox";
-import Orb from "./Orb";
+import Logo from "./Logo";
 
 type Status = "loading" | "invalid" | "ready";
 
@@ -46,7 +46,7 @@ export default function LetterView({ letterFont }: { letterFont: string }) {
     <main className="lv">
       <header className="lv-top">
         <Link href="/" className="lv-brand">
-          <Orb mode="F" size={22} />
+          <Logo size={24} />
           이음
         </Link>
       </header>

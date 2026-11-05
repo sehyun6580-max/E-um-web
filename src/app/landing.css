@@ -175,6 +175,9 @@ html:has(.lp) {
 }
 
 .lp-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   margin: 0;
   font-size: 24px;
   font-weight: 700;

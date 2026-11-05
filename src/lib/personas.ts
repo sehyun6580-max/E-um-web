@@ -92,8 +92,9 @@ export const PRESETS: Persona[] = [
     intro: "듬직하고 자상한 선배예요. 끝까지 들어주고 천천히 정리해 줘요.",
   },
   {
+    // 처음 이름은 '하린'이었어요. 이미 이 캐릭터를 고른 사람의 선택이 풀리지 않게 id는 그대로 둬요.
     id: "harin",
-    name: "하린",
+    name: "수민",
     gender: "female",
     age: "20s",
     traits: ["다정한", "유쾌한", "수다스러운"],

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Orb from "@/components/Orb";
+import Logo from "@/components/Logo";
 import "./privacy.css";
 
 /**
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
     <main className="pv">
       <header className="pv-top">
         <Link href="/" className="pv-brand">
-          <Orb mode="F" size={22} />
+          <Logo size={24} />
           이음
         </Link>
         <Link href="/chat" className="pv-top-link">

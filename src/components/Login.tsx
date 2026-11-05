@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { login, type Account } from "@/lib/storage";
-import Orb from "./Orb";
+import Logo from "./Logo";
 
 export default function Login({ onLogin }: { onLogin: (account: Account) => void }) {
   const [name, setName] = useState("");
@@ -35,7 +35,7 @@ export default function Login({ onLogin }: { onLogin: (account: Account) => void
   return (
     <main className="login">
       <section className="login-card" aria-labelledby="login-title">
-        <Orb mode="F" size={88} />
+        <Logo size={76} />
         <h1 id="login-title" className="login-title">
           이음 <span>E-um</span>
         </h1>

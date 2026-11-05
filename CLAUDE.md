@@ -71,7 +71,8 @@ src/
     LinkBox.tsx           만든 링크 복사·공유 상자
     SafetyCard.tsx        112·1366·109 안내 카드
     Sheet.tsx             공용 창 (<dialog>, 휴대폰에서는 아래에서 올라와요)
-    Orb.tsx               빛나는 구슬
+    Orb.tsx               빛나는 구슬 (기본 상담사 이음의 얼굴, 소개 페이지 그림)
+    Logo.tsx              이음 로고 (말풍선 두 개). 탭 아이콘은 app/icon.svg·favicon.ico·apple-icon.png
     landing/Mocks.tsx     소개 페이지의 챗봇 화면 모형 (앱 CSS 클래스를 재사용)
     landing/FlowSection.tsx 소개 페이지 '대화의 흐름' (스크롤 연동)
   lib/

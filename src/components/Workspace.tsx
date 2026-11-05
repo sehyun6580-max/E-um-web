@@ -21,7 +21,7 @@ import PrismPanel from "./PrismPanel";
 import PersonaSheet from "./PersonaSheet";
 import LetterSheet from "./LetterSheet";
 import LoveLetter, { LetterDrop } from "./LoveLetter";
-import Orb from "./Orb";
+import Logo from "./Logo";
 
 const uid = () => crypto.randomUUID();
 
@@ -306,7 +306,7 @@ export default function Workspace({
       <div className="frame">
         <header className="topbar">
           <Link href="/" className="brand" title="이음 소개 페이지로">
-            <Orb mode={data.mode} size={26} />
+            <Logo size={26} />
             <span className="brand-name">이음</span>
           </Link>
           <div className="topbar-right">
