@@ -12,7 +12,7 @@ import { letterFont } from "@/lib/fonts";
 export const metadata: Metadata = {
   title: "이음 E-um | 정답 대신 내 기준을 찾는 연애 상담 챗봇",
   description:
-    "이음은 헤어지라고도, 만나라고도 말하지 않는 연애 상담 챗봇이에요. 연애·썸·부부 고민을 원하는 캐릭터와 이야기하고, 화해 편지로 마음을 전해요.",
+    "흩어진 감정이 선명한 기준이 되는 시간. 이음은 연애·썸·부부 고민을 원하는 캐릭터와 이야기하며 내 기준을 찾는 연애 상담 챗봇이에요. 화해 편지로 마음도 전할 수 있어요.",
 };
 
 const PRINCIPLES = [
