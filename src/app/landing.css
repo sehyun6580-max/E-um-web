@@ -1318,26 +1318,114 @@ html:has(.lp) {
 }
 
 .lp-letter-replies {
+  min-width: 0;
+  width: min(100%, 460px);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.lp-letter-replies legend {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 0;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--lp-gray);
+}
+
+.lp-letter-chips {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
 }
 
-.lp-letter-replies span {
-  padding: 8px 14px;
+.lp-letter-chip {
+  position: relative;
+  cursor: pointer;
+}
+
+/* 동그라미는 숨기고 칩 전체를 누르는 자리로 써요. 키보드 화살표로도 고를 수 있어요. */
+.lp-letter-chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.lp-letter-chip span {
+  display: block;
+  padding: 9px 14px;
   border-radius: 999px;
   background: #fff;
   border: 1px solid var(--lp-line);
   font-size: 13.5px;
   color: var(--lp-gray);
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
 }
 
-.lp-letter-replies span:first-child {
+.lp-letter-chip:hover span {
+  border-color: #cdbcf4;
+  color: var(--lp-ink-2);
+}
+
+.lp-letter-chip input:checked + span {
   border-color: #cdbcf4;
   background: #f4f0fd;
   color: #6a52bd;
   font-weight: 600;
+}
+
+.lp-letter-chip input:focus-visible + span {
+  outline: 2px solid #6a52bd;
+  outline-offset: 2px;
+}
+
+.lp-letter-answers {
+  display: grid;
+  width: min(100%, 460px);
+}
+
+.lp-letter-answer {
+  grid-area: 1 / 1;
+  padding: 18px 22px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(60, 40, 110, 0.06);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.lp-letter-answer[data-active="true"] {
+  visibility: visible;
+  opacity: 1;
+}
+
+.lp-letter-answer-kicker {
+  margin: 0;
+  font-size: 13px;
+  color: var(--lp-gray);
+}
+
+.lp-letter-answer-title {
+  margin: 4px 0 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--lp-ink);
+}
+
+.lp-letter-answer-text {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #2b2735;
+  word-break: keep-all;
 }
 
 /* ───────── 반응형 ───────── */
@@ -1662,7 +1750,9 @@ html:has(.lp) {
 
   .lp-screen,
   .lp-flow-step,
-  .lp-nav a::after {
+  .lp-nav a::after,
+  .lp-letter-chip span,
+  .lp-letter-answer {
     transition: none;
   }
 }

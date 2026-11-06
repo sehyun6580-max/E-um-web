@@ -75,6 +75,7 @@ src/
     Logo.tsx              이음 로고 (말풍선 두 개). 탭 아이콘은 app/icon.svg·favicon.ico·apple-icon.png
     landing/Mocks.tsx     소개 페이지의 챗봇 화면 모형 (앱 CSS 클래스를 재사용)
     landing/FlowSection.tsx 소개 페이지 '대화의 흐름' (스크롤 연동)
+    landing/LetterReplyDemo.tsx 소개 페이지 편지 예시의 답장 고르기 (고른 답에 따라 받는 답장이 바뀌어요)
   lib/
     types.ts              공통 타입
     reply.ts              출력 태그 파싱, 단계 계산, 모델에 넘길 대화 정리

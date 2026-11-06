@@ -5,6 +5,7 @@ import Orb from "@/components/Orb";
 import Logo from "@/components/Logo";
 import FlowSection from "@/components/landing/FlowSection";
 import LandingNav from "@/components/landing/LandingNav";
+import LetterReplyDemo from "@/components/landing/LetterReplyDemo";
 import { MockFlip, MockReply, NOTE_SAMPLES } from "@/components/landing/Mocks";
 import PersonaAvatar from "@/components/PersonaAvatar";
 import { PRESETS, TOPICS, TOPIC_INFO, personaMeta } from "@/lib/personas";
@@ -477,7 +478,7 @@ export default function LandingPage() {
                 느껴지는 대화라면 편지 대신 도움받을 곳을 먼저 알려 드려요.
               </p>
             </div>
-            <div className="lp-letter-demo" aria-hidden>
+            <div className="lp-letter-demo" role="group" aria-label="화해 편지와 답장 예시">
               <div className={`lp-letter-paper ${letterFont.className}`}>
                 <p className="lp-letter-to">To. 지민</p>
                 <p className="lp-letter-body">
@@ -487,11 +488,7 @@ export default function LandingPage() {
                 </p>
                 <p className="lp-letter-from">From. 서연</p>
               </div>
-              <div className="lp-letter-replies">
-                <span>나도 얘기하고 싶어</span>
-                <span>조금 시간이 필요해</span>
-                <span>답장 쓰기</span>
-              </div>
+              <LetterReplyDemo letterFont={letterFont.className} />
             </div>
           </div>
         </section>
