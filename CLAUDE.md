@@ -38,7 +38,10 @@ npm run dev                 # http://localhost:3000
 npx tsc --noEmit            # 타입 검사
 npx eslint src              # 린트
 npm run build               # 배포용 빌드 (Vercel과 같은 검사)
+python3 scripts/eval/run_eval.py --set criteria --out docs/eval/날짜_이름.json   # 컨트롤러 시나리오 테스트 (실제 사이트, 비용 발생 → 먼저 물어보기)
 ```
+
+컨트롤러를 고칠 때는 `docs/HANDOFF.md` 7장 방법대로 **바꾸기 전 결과를 먼저 받아 두고, 같은 시나리오로 전후를 비교**해요. 결과 원본은 `docs/eval/`에 둬요.
 
 ## 4. 폴더 지도
 
