@@ -31,7 +31,7 @@ const OUT = args.out;
 const MODES = args.modes ?? "FT";
 const RUNS = Number(args.runs ?? 3);
 if (!SET || !OUT) {
-  console.error("사용법: node scripts/eval/run_baseline.mjs --set <stress4d|cross|criteria> --out <파일> [--modes FT] [--runs 3]");
+  console.error("사용법: node scripts/eval/run_baseline.mjs --set <stress4d|cross|criteria|closing> --out <파일> [--modes FT] [--runs 3]");
   process.exit(1);
 }
 for (const [mode, key] of [["F", "ANTHROPIC_API_KEY"], ["T", "OPENAI_API_KEY"]]) {
